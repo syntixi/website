@@ -9,7 +9,7 @@ module.exports = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.png',
   organizationName: 'syntixi', // Usually your GitHub org/user name.
   projectName: 'syntixi', // Usually your repo name.
   themeConfig: {
@@ -22,7 +22,7 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'intro',
+          docId: 'introduction',
           position: 'left',
           label: 'Documentation',
         },
@@ -46,7 +46,7 @@ module.exports = {
           items: [
             {
               label: 'Tutorial',
-              to: '/docs/intro',
+              to: '/docs/introduction',
             },
           ],
         },
@@ -99,7 +99,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/syntixi/documentation/edit/master/docs/',
+            'https://github.com/syntixi/website/edit/main/',
         },
         blog: {
           showReadingTime: true,
