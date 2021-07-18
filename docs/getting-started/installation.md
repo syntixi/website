@@ -1,12 +1,12 @@
 ---
 title: Installation
 sidebar_label: 'Installation'
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 ## Requirements
 
-* [Kubernetes](https://kubernetes.io/): A workable Kubernetes cluster is required before installing Syntixi. Following are some popular solutions to set up Kubernetes cluster with minimum effort.
+* [Kubernetes](https://kubernetes.io/): A workable Kubernetes cluster is required for running Syntixi. Following are some popular solutions to set up Kubernetes cluster with minimum effort.
     * Docker Desktop: https://www.docker.com/products/docker-desktop
     * Minikube: https://minikube.sigs.k8s.io/docs/start/
 * [Kubectl](https://kubernetes.io/docs/tasks/tools/): The version of Kubectl(Kubernetes CLI) should matches Kubernetes version you test against with.
@@ -21,7 +21,14 @@ $ helm repo add syntixi-charts https://charts.syntixi.dev/
 $ helm search repo syntixi-charts
 ```
 
-## Create namespace
+## Install Syntixi
+
+:::note
+
+This tutorial doens't cover detail settings during installation and therefore is only suitable for evaluation purpose.
+If you're looking for way to install Syntixi for production usage, head over to **[Configuration](configuration.md)** before you continue.
+
+:::
 
 Let's install Syntixi to namespace `syntixi`.
 

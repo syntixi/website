@@ -27,10 +27,10 @@ module.exports = {
           label: 'Documentation',
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
-        // {
-        //   type: 'docsVersionDropdown',
-        //   position: 'left',
-        // },
+        {
+          type: 'docsVersionDropdown',
+          position: 'left',
+        },
         {
           href: 'https://github.com/syntixi/syntixi',
           label: 'GitHub',
@@ -98,13 +98,18 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/syntixi/website/edit/main/',
+          editUrl: 'https://github.com/syntixi/website/edit/main/',
+          "lastVersion": "current",
+          "versions": {
+            "current": {
+              "label": "latest (0.0.x)",
+              "path": "latest"
+            },
+          },
         },
         blog: {
           showReadingTime: true,
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/blog/',
+          editUrl: 'https://github.com/facebook/docusaurus/edit/master/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
