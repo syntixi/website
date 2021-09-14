@@ -25,8 +25,8 @@ $ helm search repo syntixi-charts
 
 :::note
 
-This tutorial doens't cover detail settings during installation and therefore is only suitable for evaluation purpose.
-If you're looking for way to install Syntixi for production usage, head over to **[Configuration](configuration.md)** before you continue.
+This tutorial doens't cover detail settings and therefore is only suitable for evaluation purpose.
+If you're trying to setup for production environment, head over to **[Configuration](configuration.md)** before you continue.
 
 :::
 
@@ -46,22 +46,16 @@ $ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/sta
 ## Hello World!
 
 ```bash
-# Add the stock NodeJS env to your Syntixi deployment
-$ syntixi env create --name nodejs --image syntixi/node-env
-
 # A javascript one-liner that prints "hello world"
 $ curl https://raw.githubusercontent.com/syntixi/examples/master/environments/nodejs/hello.js > hello.js
 
-# Upload your function code to syntixi
-$ syntixi bundle create --name hello-bundle --env nodejs --code hello.js
+# Upload your function code
+$ syntixi bundle create --name hello-bundle --code hello.js
 
-# Create the function with the package just created
-$ syntixi function create --name hello --env nodejs --bundle hello-bundle 
-
-# Map GET /hello to your new function
-$ syntixi route create --method GET --url /hello --function hello
+# Create the function with the bundle just created
+$ syntixi function create --name hello --image node:16-alpine3.11 --bundle hello-bundle 
 
 # Run the function.  This takes about 100msec the first time.
 $ syntixi function test --name hello
-Hello, world!
+Hello World
 ```

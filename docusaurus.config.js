@@ -5,7 +5,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 module.exports = {
   title: 'Syntixi',
   tagline: 'Serverless Framework on Kubernetes',
-  url: 'https://docs.syntixi.dev',
+  url: 'https://syntixi.dev',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
