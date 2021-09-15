@@ -1,7 +1,7 @@
 ---
 title: Function
 sidebar_label: 'Function'
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 Function is an application container that executes provided binary or source code.

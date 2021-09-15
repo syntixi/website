@@ -1,8 +1,9 @@
 ---
-title: Installation
 sidebar_label: 'Installation'
-sidebar_position: 2
+sidebar_position: 0
 ---
+
+# Installation
 
 ## Requirements
 

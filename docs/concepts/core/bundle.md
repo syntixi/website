@@ -1,12 +1,13 @@
 ---
-title: Bundle
 sidebar_label: 'Bundle'
-sidebar_position: 1
+sidebar_position: 0
 ---
+
+# Bundle
 
 Bundle is an archive of files for function to execute with, it may contain source code files or machine learning models.
 
-At function initial stage, [Fetcher](xxx) downloads and extracts archive contents 
+At function initial stage, Syntixi downloads and extracts archive contents 
 to function pod volume which can be accessed with path `/userfunc`. Currently, 
 CLI supports to create a bundle with local files or a publicly accessible URL.  
 
