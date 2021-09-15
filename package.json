@@ -5,8 +5,8 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "changelog:download": "mkdir -p .docusaurus && wget https://raw.githubusercontent.com/facebook/docusaurus/main/CHANGELOG.md -O .docusaurus/CHANGELOG.md",
-    "start": "npm run changelog:download && docusaurus start",
-    "build": "npm run changelog:download && docusaurus build",
+    "start": "yarn changelog:download && docusaurus start",
+    "build": "yarn changelog:download && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
