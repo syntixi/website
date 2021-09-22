@@ -1,8 +1,9 @@
 ---
-title: "Syntixi"
 sidebar_label: 'Introduction'
 sidebar_position: 1
 ---
+
+# Syntixi
 
 ## Multi-Cloud Serverless Solution for Kubernetes
 

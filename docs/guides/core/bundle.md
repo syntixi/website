@@ -36,11 +36,11 @@ demo/
 └── entry.js
 ```
 
-The CLI creates an archives contains the target directory specified with `--codedir` and upload it to server. 
+The CLI creates an archives contains the target directory specified with `--code` and upload it to server. 
 
 ```bash
-# --codedir is equivalent "zip -r <name>.zip <directory>"  
-$ syntixi bundle create --name demo --codedir demo/
+# Equivalent to "zip -r <name>.zip <directory>"  
+$ syntixi bundle create --name demo --code demo/
 ```
 
 All files can be found under `/userfunc/<target directory name>`.
@@ -55,21 +55,21 @@ node /userfunc/demo/entry.js
 
 ### ZIP
 
-Let's create a zip file first and use `--deploy` to create a bundle with existing zip file.
+Let's create a zip file first and use `--archive` to create a bundle with existing zip file.
 
 ```bash
 $ zip -r <name>.zip <directory>
-$ syntixi bundle create --name hello --deploy <name>.zip
+$ syntixi bundle create --name hello --archive <name>.zip
 ```
 
 The CLI calculates the SHA256 checksum of zip file before uploading to ensure file integrity, however,
-it takes long time when processing large file, use `--deploychecksum` to skip checksum calculation.   
+it takes long time when processing large file, use `--checksum` to skip checksum calculation.   
 
 ```bash
-$ syntixi bundle create --name hello --deploy <name>.zip --deploychecksum <sha256-checksum>
+$ syntixi bundle create --name hello --archive <name>.zip --checksum <sha256-checksum>
 ```
 
-The function entry will depend on the structure of zip file. You can check zip file structure with the following command:  
+You can check zip file structure with the following command:
 
 ```bash
 $ zip -sf <name>.zip
@@ -80,14 +80,13 @@ $ zip -sf <name>.zip
 There are two limitations when creating a bundle with remote URL:
 
 1. The URL must be accessible inside the Kubernetes cluster.
-2. The file that URL points to must be in the `zip` format.
+2. The download file must be in the `zip` format.
 
 ```bash
-$ syntixi bundle create --name hello --code <url-to-zip-file>
-$ syntixi bundle create --name hello --deploy <url-to-zip-file> --deploychecksum <sha256-checksum>
+$ syntixi bundle create --name hello --archive <url-to-zip-file> --checksum <sha256-checksum>
 
 # Use "--insecure" to skip file integrity check before uploading and after downloading.
 # It improves the function startup time, however, it also brings potential security 
 # issue if you cannot control the content of URL points to.
-$ syntixi bundle create --name hello --deploy <url-to-zip-file> --insecure
+$ syntixi bundle create --name hello --archive <url-to-zip-file> --insecure
 ```

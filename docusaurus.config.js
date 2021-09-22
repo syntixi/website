@@ -175,7 +175,7 @@ const isVersioningDisabled = !!process.env.DISABLE_VERSIONING || isI18nStaging;
           sidebarPath: 'sidebars.js',
           editUrl: ({locale, docPath}) => {
             const nextVersionDocsDirPath = 'docs';
-            return `https://github.com/syntixi/website/edit/main/website/${nextVersionDocsDirPath}/${docPath}`;
+            return `https://github.com/syntixi/website/edit/main/${nextVersionDocsDirPath}/${docPath}`;
           },
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,

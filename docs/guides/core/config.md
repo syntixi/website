@@ -1,8 +1,9 @@
 ---
-title: Config
 sidebar_label: 'Config'
 sidebar_position: 2
 ---
+
+# Config
 
 Config is a set of configurations used by application.
 
