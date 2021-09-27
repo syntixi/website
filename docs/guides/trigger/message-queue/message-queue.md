@@ -1,7 +1,7 @@
 ---
 title: Message Queue Trigger
-sidebar_label: 'Message Queue'
-sidebar_position: 2
+sidebar_label: 'Trigger'
+sidebar_position: 1
 ---
 
 Message Queue Trigger invokes a function when receiving message from subscribed topic.

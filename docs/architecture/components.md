@@ -28,18 +28,17 @@ more valuable tasks.
 ### Router
 
 Router works as a smart proxy that redirects requests to functions. Under the hood, it uses 
-[Zenvoy](https://github.com/rueian/zenvoy) to collect metrics from envoy then stream metrics to 
-scheduler for workload scheduling. It allows us to offer better perofmance and obserability of 
+[Zenvoy](https://github.com/rueian/zenvoy) to collect metrics from envoy and then stream metrics 
+to scheduler for workload scheduling. It allows us to offer better perofmance and obserability of 
 whole system.
 
-### Message Processor
+### Message Watcher
 
-Message processor is for Syntixi to invoke message queue trigger when receiving message from
-specific message queue topic. 
+Message watcher invokes function when receiving message from topic defined in message queue trigger.
 
-As of now, a message process can only supports to subscribe/publish messages from/to one message
-queue at the same time. To support different message queue type, a dedicated message processor
-for that message queue type must be deployed.
+As of now, a message watcher can only support to subscribe/publish messages from/to 
+one type of message queue at the same time. To support different message queue type, a 
+dedicated watcher for that message queue type must be deployed ahead.
 
 ### Logger
 
@@ -58,5 +57,7 @@ It downloads archive to volume for runtime container to load at bootstrapping an
 SHA256 checksum to ensure file integrity.
 
 
+## Storage
 
+Syntixi uses Minio as backend storage for saving bundle archive.
 
