@@ -59,8 +59,8 @@ $ syntixi function create --name hello \
 ```
 
 At function initial stage, system downloads and extracts bundle contents to volume that 
-can be accessed from function container under path `/userfunc`. Since the default work directory 
-of function container is set to **/userfunc**, you can set the function entry to
+can be accessed from function container under path `/userfunc`. Default work directory 
+of function container is `/userfunc`, you can set the function entry to
 
 ```bash
 node hello.js
@@ -81,7 +81,7 @@ Here are some guidelines that can help you to decide which is better fit in your
 From the aspect of portability, the container image has better portability compares to bundle.
 Hence, an important thing to consider is **how hard to solve portability problem**.
 For example, if Syntixi is installed at the client-side, then create with container image would be a better choice as 
-the container image contains necessary execution environment and dependencies.
+the container image contains all necessary execution environment and dependencies.
 
 * Compiled or interpreted language
 
@@ -89,7 +89,7 @@ Compiled language normally requires developers to specify the target platform li
 during build time. For such cases, container image is an ideal way to solve problems above.
 
 Interpreted language, on the other hand, is able to run on different type of machine as long as 
-the container image contains necessary execution environment and dependencies.
+the container image contains all necessary execution environment and dependencies.
 
 * A function relies on things that are not part of application (Hybrid)
 
@@ -97,5 +97,5 @@ Assume you are creating a RESTful API service and one of the API requires a mach
 Since the ML model is not part of HTTP server source code and changes frequently, it's intuitive to seperated the HTTP service
 and ML model. 
 
-In this case, you can create a function with HTTP service image and referenced a bundle contains ML model. Once the
+In this case, you can create a function with HTTP service image and referenced the bundle contains ML model. Once the
 bundle is updated with the latest model, Syntixi will perform rolling update for function automatically.

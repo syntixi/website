@@ -8,7 +8,7 @@ sidebar_position: 0
 Bundle is an archive of files for function to execute with, it may contain source code files or machine learning models.
 
 At function initial stage, Syntixi downloads and extracts archive contents 
-to function pod volume which can be accessed with path `/userfunc`. Currently, 
+to function pod volume which can be accessed under `/userfunc`. Currently, 
 CLI supports to create a bundle with local files or a publicly accessible URL.  
 
 ## How to create a bundle
