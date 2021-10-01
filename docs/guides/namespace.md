@@ -11,7 +11,7 @@ sidebar_position: 0
 can only reference other namespaced resources in the same namespace. It allows
 users in different teams or projects to manage their own resources.
 
-## Mark Namespace Is Managed by Syntixi
+## Managed Namespace
 
 By default, Syntixi only manages namespaces with label `app.kubernetes.io/managed-by=syntixi`.
 In order to join the fleet, you have to label a namespace with command:
