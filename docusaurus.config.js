@@ -76,7 +76,7 @@ const isVersioningDisabled = !!process.env.DISABLE_VERSIONING || isI18nStaging;
         editCurrentVersion: true,
         sidebarPath: require.resolve('./sidebarsCommunity.js'),
         showLastUpdateAuthor: true,
-        showLastUpdateTime: true,
+        showLastUpdateTime: false,
       }),
     ],
     [
@@ -178,7 +178,7 @@ const isVersioningDisabled = !!process.env.DISABLE_VERSIONING || isI18nStaging;
             return `https://github.com/syntixi/website/edit/main/${nextVersionDocsDirPath}/${docPath}`;
           },
           showLastUpdateAuthor: true,
-          showLastUpdateTime: true,
+          showLastUpdateTime: false,
           remarkPlugins: [
             math,
             [require('@docusaurus/remark-plugin-npm2yarn'), {sync: true}],
