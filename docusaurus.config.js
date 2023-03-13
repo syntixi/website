@@ -42,7 +42,7 @@ const isVersioningDisabled = !!process.env.DISABLE_VERSIONING || isI18nStaging;
   ],
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'zh-tw'],
   },
   webpack: {
     jsLoader: (isServer) => ({
