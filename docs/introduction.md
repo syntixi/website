@@ -53,7 +53,7 @@ You can learn more about Syntixi and get started from [documentation](https://do
 
 ## Official Releases
 
-Official releases of Syntixi can be found on [the releases page](https://github.com/syntixi/syntixi/releases). 
+Official releases of Syntixi can be found on [the releases page](https://github.com/syntixi/releases/releases). 
 Please note that it is strongly recommended that you use official releases of Syntixi, as unreleased versions from 
 the master branch are subject to changes and incompatibilities that will not be supported in the official releases. 
 Builds from the master branch can have functionality changed and even removed at any time without compatibility support 

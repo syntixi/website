@@ -56,7 +56,7 @@ Visit [release page](https://github.com/syntixi/releases/releases) to download C
   <summary>MacOS</summary>
 
 ```bash
-$ curl -fLO -o syntixi https://github.com/syntixi/releases/releases/download/$(curl https://raw.githubusercontent.com/syntixi/releases/master/stable.txt)/syntixi-cli-osx
+$ curl -fL -o syntixi https://github.com/syntixi/releases/releases/download/$(curl https://raw.githubusercontent.com/syntixi/releases/master/stable.txt)/syntixi-cli-osx
 $ chmod +x syntixi
 $ mv syntixi /usr/local/bin/syntixi
 ```
@@ -67,7 +67,7 @@ $ mv syntixi /usr/local/bin/syntixi
 
 * AMD64
 ```bash
-$ curl -fLO -o syntixi https://github.com/syntixi/releases/releases/download/$(curl https://raw.githubusercontent.com/syntixi/releases/master/stable.txt)/syntixi-cli-linux
+$ curl -fL -o syntixi https://github.com/syntixi/releases/releases/download/$(curl https://raw.githubusercontent.com/syntixi/releases/master/stable.txt)/syntixi-cli-linux
 $ chmod +x syntixi
 $ mv syntixi /usr/local/bin/syntixi
 ```
