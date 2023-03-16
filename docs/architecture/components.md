@@ -1,63 +1,58 @@
 ---
 sidebar_label: 'Components'
-sidebar_position: 0
+sidebar_position: 99
 ---
 
 # Components
 
-## Syntixi
+## Controllers
 
-### Controllers
+The controller monitors changes in the Syntixi Custom Resource Definition (CRD) by
+communicating with the Kubernetes API server. When a new CRD is created other than a Function,
+the controller will create Kubernetes objects associated with the CRD for use by the Pod of the
+Function in the future.
 
-Controller exposes APIs for CLI operations like uploading archive and most importantly it 
-serves two admission control webhooks for mutating and validating resources. 
-(See [dynamic admission controller](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/) for more information.)
+![controller](/img/architecture/controller-api-server-crd.jpg)
 
-### Scheduler
+Additionally, the controller provides an upload API for clients to upload compressed code files
+to storage when creating a bundle.
 
-Scheduler creates Kubernetes resources (Deployment, Service, HPA) when a 
-[function](../guides/core/function.md) is created. If any of resource like 
-[bundle](../guides/core/bundle.md) and [config](../guides/core/config.md) is changed, 
-scheduler performs rolling update for functions that reference the changed resource.
+## Scheduler
 
-For multi-cluster scenario (coming soon), scheduler deploys function containers to cluster that 
-fullfils resource requirement and re-balance workloads between clusters to match given condition.
-In other word, it reduces effort for maintaining Kubernetes clusters and allows SREs to focus on
-more valuable tasks.
+When a Function is created, the Scheduler is responsible for creating Kubernetes objects associated with it, such as 
+Deployment, Service, HPA, and so on.
 
-### Router
+If the resources referenced by the Function, such as Bundle or Config, are changed, the Scheduler will trigger a rolling 
+upgrade of the Function pod to reflect the updates.
 
-Router works as a smart proxy that redirects requests to functions. Under the hood, it uses 
-[Zenvoy](https://github.com/rueian/zenvoy) to collect metrics from envoy and then stream metrics 
-to scheduler for workload scheduling. It allows us to offer better perofmance and obserability of 
-whole system.
+For multi-cloud/hybrid cloud scenarios, the Scheduler will deploy Function pods to the appropriate cluster based on the 
+configuration and resource usage. When there are imbalances or abnormalities in different clusters, the 
+Scheduler will automatically schedule the pods to other clusters to balance the load and improve service availability.
 
-### Message Watcher
+## Logger
 
-Message watcher invokes function when receiving message from topic defined in message queue trigger.
+The logger is responsible for collecting logs of Function pods from all nodes and sending them to InfluxDB 
+for log persistence. Users can retrieve logs of a specific Function by using CLI commands for troubleshooting.
 
-As of now, a message watcher can only support to subscribe/publish messages from/to 
-one type of message queue at the same time. To support different message queue type, a 
-dedicated watcher for that message queue type must be deployed ahead.
+## Function Pod
 
-### Logger
+When a Function is created, the Scheduler creates corresponding pods based on its content. The pod mainly consists of two containers:
 
-Logger collects container logs on each node and sends data to influxdb for log persistence. 
-
-## Function
-
-### Runtime
-
-Runtime is a container that executes user-defined entry. 
-
-### Fetcher
-
-Fetcher is a init container that only added to Pod when one function reference a bundle resource.
-It downloads archive to volume for runtime container to load at bootstrapping and calculates 
-SHA256 checksum to ensure file integrity.
-
+* Runtime: the container that executes the user's application.
+* Fetcher: the init container that downloads the Bundle archive referenced by the Function for the runtime container to execute when it starts.
 
 ## Storage
 
-Syntixi uses Minio as backend storage for saving bundle archive.
+Currently, Syntixi only supports MinIO as the storage backend to store Bundle archives.
+
+## Message Watcher
+
+Syntixi supports event-trigger scenarios through the use of Message Watchers. 
+When receiving a message from a specified topic, the watcher invokes the corresponding Function via an HTTP call.
+
+Currently, a watcher only supports one type of message queue service. To support different types of message queue services, 
+relevant watchers must be deployed beforehand to properly invoke the Function.
+
+
+
 

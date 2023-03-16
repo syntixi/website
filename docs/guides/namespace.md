@@ -20,7 +20,7 @@ In order to join the fleet, you have to label a namespace with command:
 $ kubectl label namespace <namespace> app.kubernetes.io/managed-by=syntixi
 ```
 
-After labeling `default` namespace (or any other namesapce), you shall see
+After labeling `default` namespace (or any other namespace), you shall see
 
 ```sh
 $ kubectl get namespace --show-labels
@@ -28,9 +28,10 @@ NAME      STATUS   AGE     LABELS
 default   Active   174d    app.kubernetes.io/managed-by=syntixi
 ```
 
-## Create Namespaced Resources
+## Create Namespaced CRDs
 
-Syntixi CLI reads `$HOME/.kube/config` and use current context for CLI operations like create, update and delete.
+By default, Syntixi CLI uses the namespace of the `current-context` in `$HOME/.kube/config` to 
+send requests to Kubernetes API Server.
 
 ```sh
 # View current context
@@ -58,10 +59,10 @@ $ syntixi --namespace <namespace> bundle create --name hello --code hello.js
 
 ## No Cross Namespace Reference
 
-Namespaced resources cannot be refereneced by other namespaced resources located in different
+Namespaced objects cannot be referenced by objects located in different
 namespaces.
 
-Let's say you create a function in namespace `foobar` and want to references a bundle in 
+Let's say you create a function in namespace `foobar` and want to reference a bundle in 
 namespace `default`, CLI will return an error shows `resource not found` due to 
 two resources are not in the same namespace and so system cannot find bundle named
 `hello` in namesapce `foobar`.
@@ -72,6 +73,6 @@ Error: Bundle needs to be present in the same namespace 'foobar' as function 'he
 bundles.core.syntixi.dev "hello" not found
 ```
 
-By disabling cross namespace reference not only reduces complextity when developing Syntixi, 
-it also brings lots of benefits like supporting mulit-tenant scenario and providing 
+By disabling cross namespace reference not only reduces complexity when developing Syntixi, 
+it also brings lots of benefits like supporting multi-tenant scenario and providing 
 strong namespace isolation to avoid any potential security issues.
