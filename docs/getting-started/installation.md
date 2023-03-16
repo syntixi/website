@@ -79,6 +79,13 @@ $ mv syntixi /usr/local/bin/syntixi
 Visit [release page](https://github.com/syntixi/releases/releases) to download CLI.
 </details>
 
+## Let Syntixi manage default namespace
+
+```bash
+# add label to default namespace
+kubectl label namespace default app.kubernetes.io/managed-by=syntixi
+```
+
 ## Hello World!
 
 ```bash
