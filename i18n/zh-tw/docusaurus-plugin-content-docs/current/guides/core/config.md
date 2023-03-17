@@ -7,7 +7,7 @@ sidebar_position: 2
 
 Config 是應用程式使用的一組設定
 
-## 如何建立 Congih
+## 如何建立 Config
 
 ### 純文字
 
