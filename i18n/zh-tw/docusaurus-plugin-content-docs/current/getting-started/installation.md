@@ -3,55 +3,52 @@ sidebar_label: 'Installation'
 sidebar_position: 1
 ---
 
-# Installation
+# 安裝Syntixi
 
-## Requirements
+## 安裝需求
 
-* [Kubernetes](>= 1.20, https://kubernetes.io/):  A workable Kubernetes cluster is required for running Syntixi. Following are some popular solutions to set up Kubernetes cluster with minimum effort.
+* [Kubernetes](>= 1.20, https://kubernetes.io/):  Syntixi 需要運行在 Kubernetes 叢集之中，以下是熱門且簡易建立 Kubernetes 叢集的方案
     * Docker Desktop: https://www.docker.com/products/docker-desktop
     * Minikube: https://minikube.sigs.k8s.io/docs/start/
-* [Kubectl](>= 1.20, https://kubernetes.io/docs/tasks/tools/): The version of Kubectl(Kubernetes CLI) should match Kubernetes version you test against with.
+* [Kubectl](>= 1.20, https://kubernetes.io/docs/tasks/tools/): Kubectl（Kubernetes CLI）的版本應與您進行測試的 Kubernetes 版本相匹配。
 * [Helm](>= 3.0, https://helm.sh/) 
 
-## Add Syntixi Helm repository
+## 新增 Syntixi Helm 儲存庫
 
-1. Add chart repository: `helm repo add syntixi https://releases.syntixi.dev/`
-2. Update repository: `helm repo update syntixi`
-3. Search repo for releases: `helm search repo syntixi`
-  * For development releases: `helm search repo syntixi --devel -l`
+1. 新增 Helm chart 儲存庫: `helm repo add syntixi https://releases.syntixi.dev/`
+2. 更新儲存庫: `helm repo update syntixi`
+3. 在儲存庫中搜尋釋出的版本: `helm search repo syntixi`
+  * 搜尋開發版本: `helm search repo syntixi --devel -l`
 
 ## Install Syntixi
 
 :::note
 
-This tutorial doens't cover detail settings and therefore is only suitable for evaluation purpose.
-If you're trying to set up for production environment, head over to **[Configuration](configuration.md)** before you continue.
+這篇教學只適用於評估目的，並不包含完整的詳細設定。如果您想要應用在正式環境中，可以先到 **[Configuration](configuration.md)** 查看相關訊息
 
 :::
 
-Let's install Syntixi to namespace `syntixi`.
+在 `syntixi` namespace 底下安裝 Syntixi
 
 ```bash
-# Install the latest version
+# 安裝最新版本
 $ helm install syntixi --namespace syntixi --create-namespace syntixi/syntixi
 
-# Install the specific version
+# 安裝特定版本
 $ helm install syntixi --namespace syntixi --create-namespace --version <chart_version> syntixi/syntixi 
 ```
 
-If your Kubernetes environment doesn't [persistence volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
-yet, please set `storage.persistence.enabled` to `false`
-
+如果你的 Kubernetes 叢集沒有 [persistence volume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+請將 `storage.persistence.enabled` 設定成 `false`
 
 ```bash
 $ helm install syntixi --namespace syntixi --create-namespace \
     --set storage.persistence.enabled=false syntixi/syntixi
 ```
 
-## Install Syntixi CLI
+## 安裝 Syntixi CLI
 
-Visit [release page](https://github.com/syntixi/releases/releases) to download CLI based on installed Syntixi version and your OS.
-
+到 [發佈頁面](https://github.com/syntixi/releases/releases) 根據您要安裝的版本以及作業系統下載 CLI
 <details>
   <summary>MacOS</summary>
 
@@ -76,8 +73,15 @@ $ mv syntixi /usr/local/bin/syntixi
 <details>
   <summary>Others</summary>
 
-Visit [release page](https://github.com/syntixi/releases/releases) to download CLI.
+到 [發佈頁面](https://github.com/syntixi/releases/releases) 下載CLI
 </details>
+
+## 讓 Syntixi 管理 default namespace
+
+```bash
+# add label to default namespace
+kubectl label namespace default app.kubernetes.io/managed-by=syntixi
+```
 
 ## Hello World!
 
