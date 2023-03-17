@@ -4,52 +4,46 @@ sidebar_position: 1
 ---
 
 # Function
+Function 是一個應用程式容器，其執行指定的binary檔案或原始碼
 
-Function is an application container that executes provided binary or source code.
+目前Syntixi僅支援http服務運行在80 port。我們將會支援：
+* 不同的 protocol，如 TCP,UDP
+* 從其他 port 連接到應用程式
 
-As of now, Syntixi only supports running HTTP service that exports at 80 ports. In the future, we plan to support:
+## 如何建立 function
 
-* Different protocol like TCP and UDP.
-* Application exposes in different ports.
+Syntixi 讓使用者可以用 [容器映像檔](https://www.docker.com/resources/what-container) 
+來建立 function，並且不需要做任何的異動。可以幫助使用者簡單地把他們的服務移植到 Kubernetes 中。如果您比較喜歡傳統的 
+FaaS 方式，我們也支援使用原始碼建立 function
 
-## How to create a function
+### 容器映象檔
 
-Syntixi allows users to create a function with [container image](https://www.docker.com/resources/what-container) without
-modifying existing application. It helps users to migrate their service to Kubernetes easily. If you are in favor of
-traditional FaaS way to create a function, we also support to create a function with source code.
-
-### Container image
-
-Here we use [NGINX](https://hub.docker.com/_/nginx) container image to create an example function.
+這裡我們使用 [NGINX](https://hub.docker.com/_/nginx) 容器映像檔來當例子建立 function
 
 ```sh
 $ syntixi function create --name fn-demo --image nginx
 ```
 
-It may take some time for Kubernetes to pull container imager. Once it's done, you can test your function with
-subcommand `test`
+Kubernetes 下載容器映像檔時會花一些時間，當完成時您可以使用`function test`來測試您建立的 function
 
 ```sh
 $ syntixi function test --name fn-demo
 ```
-
-If the container image doesn't specify the entrypoint like [here](https://github.com/nginxinc/docker-nginx/blob/f958fbacada447737319e979db45a1da49123142/mainline/debian/Dockerfile#L116).
-You will need to pass `--entry` when creating the function.
+如果容器映像未指定入口點（entrypoint），例如 [此處](https://github.com/nginxinc/docker-nginx/blob/f958fbacada447737319e979db45a1da49123142/mainline/debian/Dockerfile#L116)，您將需要在建立 function 時 `--entry`。
 
 ```sh
 $ syntixi function create --name fn-demo --image nginx --entry "nginx -g daemon off;"
 ```
 
-### Bundle (archive of source code or binary)
+### Bundle (使用原始碼或執行檔)
 
 :::note
 
-You will need a bundle for the following steps. Visit [here](bundle.md#single-file) to learn how to create a bundle.
+您需要一個 bundle 來進行以下步驟，可以參考 [Bundle](bundle.md#single-file) 来了解建立 bundle 的方法
 
 :::
 
-Assume you have created a bundle with code written in Node.js. 
-Let's use container image from official [Node.js](https://hub.docker.com/_/node) container registry.
+假設您已經使用 Node.js 原始碼來建立 bundle，接下來我們使用官方提供的[Node.js](https://hub.docker.com/_/node) 容器映像檔來建立 function。
 
 ```sh
 $ syntixi function create --name hello \
@@ -58,44 +52,40 @@ $ syntixi function create --name hello \
     --entry "node hello.js"
 ```
 
-At function initial stage, system downloads and extracts bundle contents to volume that 
-can be accessed from function container under path `/userfunc`. Default work directory 
-of function container is `/userfunc`, you can set the function entry to
-
+在 function 初始化階段時，會去下載 bundle 
+並將內容放到容器的`/userfunc`底下，同時容器預設的工作目錄也是`/userfunc`，因此您可以將 function 
+的 entry 參數設定為
 ```bash
 node hello.js
 ```
 
-or in absolute path format
+或使用絕對路徑
 
 ```bash
 node /userfunc/hello.js
 ```
 
-## Create with container image or bundle ?
+## 要使用容器映像檔還是 bundle?
 
-Here are some guidelines that can help you to decide which is better fit in your case.
+以下是一些建議，可以幫助您決定哪種更適合您的情況。
 
-* Portability of artifacts
+* 可攜性
 
-From the aspect of portability, the container image has better portability compares to bundle.
-Hence, an important thing to consider is **how hard to solve portability problem**.
-For example, if Syntixi is installed at the client-side, then create with container image would be a better choice as 
-the container image contains all necessary execution environment and dependencies.
+從可攜性的角度來看，容器映像檔比起 bundle 具有更好的可攜性。考量要如何解決可攜性問題是非常重要的，例如，Syntixi 
+安裝在客戶端，使用容器映像檔建立 function 會是更好的選擇，因為容器映像檔包含了所有必要的執行環境和相關套件。
 
-* Compiled or interpreted language
+* 編譯語言或直譯語言
 
-Compiled language normally requires developers to specify the target platform like OS and [ISA](https://en.wikipedia.org/wiki/Instruction_set_architecture)
-during build time. For such cases, container image is an ideal way to solve problems above.
+編譯式語言通常需要開發者在建立時指定目標平台，例如作業系統和[指令集](https://en.wikipedia.org/wiki/Instruction_set_architecture)
+，在這種情況容器映像檔是一個解決上述問題的好方法。
 
-Interpreted language, on the other hand, is able to run on different type of machine as long as 
-the container image contains all necessary execution environment and dependencies.
+另一方面，直譯式語言只要容器映像檔包含所有必要的執行環境和相關套件，就可以在不同類型的機器上運行。
 
-* A function relies on things that are not part of application (Hybrid)
+* Function 依賴的東西不是應用程式的一部分 (混合式)
 
-Assume you are creating a RESTful API service and one of the API requires a machine learning model to perform inference.
-Since the ML model is not part of HTTP server source code and changes frequently, it's intuitive to seperated the HTTP service
-and ML model. 
+假設您正在建立一個 RESTful API 服務，其中一個API需要使用機器學習模型進行推論。
+由於機器學習模型不是 HTTP 服務代碼的一部分且經常更改，因此將 HTTP 服務和機器學習模型分開是很自然的。
 
-In this case, you can create a function with HTTP service image and referenced the bundle contains ML model. Once the
-bundle is updated with the latest model, Syntixi will perform rolling update for function automatically.
+
+在這種情況下，您可以使用帶有HTTP服務的容器映像檔，並參考包含機器學習模型的 bundle 來建立 function。一旦 bundle 中的機器學習模型更新，Syntixi將自動滾動更新相關的 function。
+
