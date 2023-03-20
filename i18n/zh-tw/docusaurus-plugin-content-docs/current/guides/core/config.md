@@ -40,7 +40,7 @@ spec:
 
 您也可以使用 `--from-file <key>=<absolute-path-to-file>` 來使用檔案建立 Config
 
-為了示範，我們先用 OpenSSL 來為域名 `example.com` 生成 TLS 憑證檔案。
+為了示範，我們先用 OpenSSL 來為域名 `example.com` 生成 TLS 憑證檔案，然後使用生成的檔案建立 Config。
 ```sh
 $ sudo openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
     -keyout example.key -out example.crt -subj "/CN=example.com"
