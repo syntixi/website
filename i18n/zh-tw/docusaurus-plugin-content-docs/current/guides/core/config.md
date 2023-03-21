@@ -9,7 +9,7 @@ Config 是應用程式使用的一組設定
 
 ## 如何建立 Config
 
-### 純文字
+### 純文字 (Literal)
 
 您可以使用 `--from-literal <key>=<value>` 來使用純文字建立設定檔，指令如下
 
@@ -36,7 +36,7 @@ spec:
 ```
 
 
-### File
+### 檔案 (File)
 
 您也可以使用 `--from-file <key>=<absolute-path-to-file>` 來使用檔案建立 Config
 
