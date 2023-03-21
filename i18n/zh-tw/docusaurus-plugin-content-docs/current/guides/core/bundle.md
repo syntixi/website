@@ -8,8 +8,9 @@ sidebar_position: 0
 Bundle 是供 Function 執行運作時所使用的壓縮檔，
 其中可能包含原始碼檔案或機器學習模型。
 
-在 Function 的初始階段，Syntixi 會下載並解壓縮 Bundle 檔案至 Function pod 的 `/userfunc` 路徑底下。。 
-目前 CLI 支援使用本地檔案或公開可訪的 URL 來創建 Bundle。
+在 Function 的初始階段，Syntixi 會下載並解壓縮 Bundle 檔案至 Function Pod 的 `/userfunc` 路徑底下。
+目前 CLI 支援使用本地檔案或公開可存取的 URL 來創建 Bundle。
+
 ## 如何建立一個 Bundle
 
 ### 單一檔案
@@ -39,7 +40,7 @@ demo/
 # Equivalent to "zip -r <name>.zip <directory>"  
 $ syntixi bundle create --name demo --code demo/
 ```
-當 Function 建立後，所有檔案都會放在 Function pod 的 `/userfunc/<target directory name>` 底下
+當 Function 建立後，所有檔案都會放在 Function Pod 的 `/userfunc/<target directory name>` 底下
 
 ```bash
 # relative path
