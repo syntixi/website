@@ -7,11 +7,11 @@ sidebar_position: 1
 
 ## Requirements
 
-* [Kubernetes](>= 1.20, https://kubernetes.io/):  A workable Kubernetes cluster is required for running Syntixi. Following are some popular solutions to set up Kubernetes cluster with minimum effort.
+* [Kubernetes](https://kubernetes.io/) >= 1.20:  A workable Kubernetes cluster is required for running Syntixi. Following are some popular solutions to set up Kubernetes cluster with minimum effort.
     * Docker Desktop: https://www.docker.com/products/docker-desktop
     * Minikube: https://minikube.sigs.k8s.io/docs/start/
-* [Kubectl](>= 1.20, https://kubernetes.io/docs/tasks/tools/): The version of Kubectl(Kubernetes CLI) should match Kubernetes version you test against with.
-* [Helm](>= 3.0, https://helm.sh/) 
+* [Kubectl](https://kubernetes.io/docs/tasks/tools/) >= 1.20: The version of Kubectl(Kubernetes CLI) should match Kubernetes version you test against with.
+* [Helm](https://helm.sh/) >= 3.0
 
 ## Add Syntixi Helm repository
 
