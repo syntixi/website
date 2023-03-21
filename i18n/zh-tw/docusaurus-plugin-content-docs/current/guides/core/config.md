@@ -5,13 +5,13 @@ sidebar_position: 2
 
 # Config
 
-Config is a set of configurations used by application.
+Config 是應用程式使用的一組設定
 
-## How to create a config
+## 如何建立 Config
 
-### Literal
+### 純文字 (Literal)
 
-You can use `--from-literal <key>=<value>` to set configuration with literal string. The command is
+您可以使用 `--from-literal <key>=<value>` 來使用純文字建立設定檔，指令如下
 
 ```sh
 $ syntixi config create --name db-config \
@@ -20,7 +20,7 @@ $ syntixi config create --name db-config \
     --from-literal MYSQL_PASSWD="password" 
 ```
 
-which results in 
+建立的結果如下
 
 ```yaml
 apiVersion: core.syntixi.dev/v1
@@ -36,12 +36,11 @@ spec:
 ```
 
 
-### File
+### 檔案 (File)
 
-You can use `--from-file <key>=<absolute-path-to-file>` to set a configuration with file.
+您也可以使用 `--from-file <key>=<absolute-path-to-file>` 來使用檔案建立 Config
 
-For demostartion, let's first use openssl to generate TLS files for domain `example.com`.
-
+為了示範，我們先用 OpenSSL 來為域名 `example.com` 生成 TLS 憑證檔案，然後使用生成的檔案建立 Config。
 ```sh
 $ sudo openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
     -keyout example.key -out example.crt -subj "/CN=example.com"
@@ -53,7 +52,7 @@ $ syntixi config create --name tls-cfg --type tls \
     --from-file tls.crt=example.crt
 ```
 
-which results in 
+結果如下
 
 ```yaml
 apiVersion: core.syntixi.dev/v1

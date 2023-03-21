@@ -23,7 +23,7 @@ $ syntixi bundle create --name hello --code hello.js
 ### Multiple files
 
 To create a multiple files bundle with CLI, you first need to put all necessary files in a directory and 
-use `--codir` when creating the bundle.
+use `--code` when creating the bundle.
 
 For example, the target directory's structure looks like
 

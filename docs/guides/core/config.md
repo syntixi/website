@@ -40,7 +40,7 @@ spec:
 
 You can use `--from-file <key>=<absolute-path-to-file>` to set a configuration with file.
 
-For demostartion, let's first use openssl to generate TLS files for domain `example.com`.
+For demonstration, let's first use openssl to generate TLS files for domain `example.com`.
 
 ```sh
 $ sudo openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
