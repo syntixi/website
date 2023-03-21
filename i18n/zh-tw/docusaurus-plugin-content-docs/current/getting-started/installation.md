@@ -7,11 +7,11 @@ sidebar_position: 1
 
 ## 安裝需求
 
-* [Kubernetes](>= 1.20, https://kubernetes.io/):  Syntixi 需要運行在 Kubernetes 叢集之中，以下是熱門且簡易建立 Kubernetes 叢集的方案
+* [Kubernetes](https://kubernetes.io/) >= 1.20:  Syntixi 需要運行在 Kubernetes 叢集之中，以下是熱門且簡易建立 Kubernetes 叢集的方案
     * Docker Desktop: https://www.docker.com/products/docker-desktop
     * Minikube: https://minikube.sigs.k8s.io/docs/start/
-* [Kubectl](>= 1.20, https://kubernetes.io/docs/tasks/tools/): Kubectl（Kubernetes CLI）的版本應與您進行測試的 Kubernetes 版本相匹配。
-* [Helm](>= 3.0, https://helm.sh/) 
+* [Kubectl](https://kubernetes.io/docs/tasks/tools/) >= 1.20: Kubectl（Kubernetes CLI）的版本應與您進行測試的 Kubernetes 版本相匹配。
+* [Helm](https://helm.sh/) >= 3.0
 
 ## 新增 Syntixi Helm 儲存庫
 
