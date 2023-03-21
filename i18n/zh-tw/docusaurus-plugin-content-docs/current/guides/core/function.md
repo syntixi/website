@@ -52,9 +52,10 @@ $ syntixi function create --name hello \
     --entry "node hello.js"
 ```
 
-在 Function 初始化階段時，fetcher 會去下載 Bundle 
+在 Function 初始化階段時，Fetcher 會去下載 Bundle 
 並將內容放到容器的 `/userfunc` 底下，同時容器預設的工作目錄也是 `/userfunc`，因此您可以將 Function 
 的 entry 參數設定為
+
 ```bash
 node hello.js
 ```
@@ -77,9 +78,7 @@ node /userfunc/hello.js
 * 編譯語言或直譯語言
 
 編譯式語言通常需要開發者在建立時指定目標平台，例如作業系統和[指令集](https://en.wikipedia.org/wiki/Instruction_set_architecture)
-，在這種情況容器映像檔是一個解決上述問題的好方法。
-
-另一方面，直譯式語言只要容器映像檔包含所有必要的執行環境和相關套件，就可以在不同類型的機器上運行。
+，在這種情況容器映像檔是一個解決此問題的好方法。另一方面，直譯式語言只要容器映像檔包含所有必要的執行環境和相關套件，就可以在不同類型的機器上運行。
 
 * Function 依賴的東西不是應用程式的一部分 (混合式)
 
