@@ -62,7 +62,7 @@ Mixed         | /foo (Prefix), /foo (Exact)	| /foo | Yes, prefers Exact
 
 ### Host
 
-We strongly reommend to specify a target host (domain name) when exposing a function. It helps to avoid path conflicts if there are multiple functions are trying to expose at the same URL path.
+We strongly recommend to specify a target host (domain name) when exposing a function. It helps to avoid path conflicts if there are multiple functions are trying to expose at the same URL path.
 
 Use `--host` to specify the target host of HTTP trigger.
 

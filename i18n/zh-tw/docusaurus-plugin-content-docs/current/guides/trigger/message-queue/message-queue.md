@@ -4,31 +4,32 @@ sidebar_label: 'Trigger'
 sidebar_position: 1
 ---
 
-Message Queue Trigger invokes a function when receiving message from subscribed topic.
+Message Queue Trigger 當收到已訂閱主題的訊息的時候會調用 Function。
 
-## How to create a message queue trigger
+## 如何建立一個 Message Queue Trigger
 
-You will need to provide three topics (subject) when creating a trigger.
+在建立 Message Queue Trigger 時必須提供三個主題。
+
 
 * **Topic** (required)
-    * Syntixi subscribes to this topic and invokes a function when receiving message from it.
+    * Syntixi 訂閱這個主題並且當收到訊息時會去調用 Function。
 * **Response topic** (optional)
-    * If an invocation is success and the status code of function response is **200**, response body will be sent to this topic.
+    * 如果執行成功且函數回傳的狀態碼為 200 時，會將回應送至這個主題。
 * **Error topic** (optional)
-    * If any error occurs during invocation or the status code of function response is not equal to **200**, error will be sent to this topic.
-    * It's recommend to monitor whether error topic receives any unwanted error, it helps us to handle the error as soon as possible.
-    * If no error topic is provided, all error messages will be discarded and may increase complextility when toudbleshooting.
+    * 如果有在執行時有任何錯誤發生或是回傳狀態碼不是 200 時會將錯誤訊息送至此主題。
+    * 建議要監控此主題是否有接到錯誤訊息，這樣可盡快處理錯誤。
+    * 如果沒有指定錯誤主題，所有的錯誤訊息將會被拋棄，這樣會增加處理問題的複雜度。
 
 ```sh
 $ syntixi mqt create --name hello --function hello \
     --topic hw --resptopic 'hw-response' --errtopic 'hw-error'
 ```
 
-### Content Type
+### 內容格式
 
-The default content type of requests sent by Syntixi is `application/json`. To change it, you can use `--contenttype` to specify the type when creating/updating the trigger.
+Syntixi 送出的內文格式預設為 `application/json`，如果要使用別的格式的話可以在更新或建立 Message Queue Trigger 透過 `--contenttype` 指定內文格式。
 
-For example, if a function can only accepts request in YAML format. We can update the content type of existing trigger to `text/yaml`.
+例如，當 Function 只接受 Yaml 格式的請求，我們可以透過更新來將 Message Queue Trigger 的訊息格式改為 `text/yaml`。
 
 ```sh
 $ syntixi mqt update --name hello --contenttype 'text/yaml'

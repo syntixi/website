@@ -4,25 +4,26 @@ sidebar_label: 'Cron'
 sidebar_position: 3
 ---
 
-Cron trigger invokes a function periodically based on provided crontab specification.
+Cron Trigger 根據指定的週期來調用 Function
 
-## How to create a cron trigger
+## 如何建立 Cron Trigger
 
-Assume we want to trigger a function every minutes, you can provide `* * * * *` as crontab specification when create the cron trigger. (Visit [here](https://en.wikipedia.org/wiki/Cron) here to learn more about crontab specification.)
+假設想要每分鐘都執行某個 Function，您可以使用`* * * * *` Crontab 規範來建立 Cron Trigger。您可以到[這邊](https://en.wikipedia.org/wiki/Cron)瞭解更多有關於 Crontab 規範的設定方式。
+
 
 ```sh
 $ syntixi crontrigger create --name hello --function hello --cron "* * * * *"
 ```
 
-### Suspend a cron trigger
+### 暫停 Cron Trigger
 
-To suspend a cron trigger you will need to set `--suspend` when creating or updating the trigger. Let's suspend the trigger we created in the  last step.
+要暫停一個 Cron Trigger 需要在建立或更新 Cron Trigger時加入`--suspend`參數。現在我們暫停剛剛建立的 Cron Trigger
 
 ```sh
 $ syntixi crontrigger update --name hello --suspend
 ```
 
-To unsuspend the trigger, you can set `--suspend` to `false`.
+要解除暫停 Cron Trigger，需要將 `--suspend` 設定為 `false`
 
 ```sh
 $ syntixi crontrigger update --name hello --suspend=false
