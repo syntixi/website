@@ -94,4 +94,3 @@ $ syntixi function create --name=config-demo --image=nginx \
 --file-from-config db-config=MYSQL_USER=/opt/MYSQL_USER \
 --file-from-config db-config=MYSQL_PASSWD=/opt/MYSQL_PASSWD
 ```
-```
