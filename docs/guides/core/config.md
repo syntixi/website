@@ -67,3 +67,32 @@ spec:
     tls.key: <BASE64 CONTENT>
   type: tls
 ```
+
+## How to use a config in function
+
+You can use config for a function in two ways:
+* environment variables
+* file
+### Environment variable
+
+Use config as environment variables with `--env-from-config CONFIG_NAME=KEY=ENV_NAME` when create pod.
+
+Following example we use config previous created as environment variables.
+
+```sh
+$ syntixi function create --name=config-demo --image=nginx \
+--env-from-config db-config=MYSQL_ADDRESS=MYSQL_ASSRESS \ 
+--env-from-config db-config=MYSQL_USER=MYSQL_USER \
+--env-from-config db-config=MYSQL_PASSWD=MYSQL_PASSWD
+```
+### File
+
+
+Here is an example of using config as file and mounting it at `/opt/` with `--file-from-config CONFIG_NAME=KEY=/absolute/path/to/file`.
+
+```sh
+$ syntixi function create --name=config-demo --image=nginx \
+--file-from-config db-config=MYSQL_ADDRESS=/opt/MYSQL_ASSRESS \ 
+--file-from-config db-config=MYSQL_USER=/opt/MYSQL_USER \
+--file-from-config db-config=MYSQL_PASSWD=/opt/MYSQL_PASSWD
+```

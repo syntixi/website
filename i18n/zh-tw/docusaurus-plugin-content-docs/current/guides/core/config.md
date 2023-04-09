@@ -66,3 +66,31 @@ spec:
     tls.key: <BASE64 CONTENT>
   type: tls
 ```
+
+## 如何在 Function 使用 Config
+
+您可以使用兩種方式來讓 Function 使用 Config 內的資料：
+* 環境變數
+* 檔案
+
+### 環境變數
+
+使用 Config 當作 Function Pod 的環境變數 `--env-from-config CONFIG_NAME=KEY=ENV_NAME`
+
+以下為使用上面建立的 Config 來當作 Function pod 的環境變數
+```sh
+$ syntixi function create --name=config-demo --image=nginx \
+--env-from-config db-config=MYSQL_ADDRESS=MYSQL_ASSRESS \ 
+--env-from-config db-config=MYSQL_USER=MYSQL_USER \
+--env-from-config db-config=MYSQL_PASSWD=MYSQL_PASSWD
+```
+### 檔案
+
+這邊是一個使用`--file-from-config CONFIG_NAME=KEY=/absolute/path/to/file`來把 Config 當作檔案放入 Function pod 的 `/opt/` 底下的範例
+
+```sh
+$ syntixi function create --name=config-demo --image=nginx \
+--file-from-config db-config=MYSQL_ADDRESS=/opt/MYSQL_ASSRESS \ 
+--file-from-config db-config=MYSQL_USER=/opt/MYSQL_USER \
+--file-from-config db-config=MYSQL_PASSWD=/opt/MYSQL_PASSWD
+```
