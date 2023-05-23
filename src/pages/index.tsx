@@ -1,254 +1,205 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import React from 'react';
+import classnames from 'classnames';
+import ReactPlayer from 'react-player/youtube'
+import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-import Translate, {translate} from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import styles from './index.module.css';
+import CodeBlock from "@theme/CodeBlock";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-import Image from '@theme/IdealImage';
-import Layout from '@theme/Layout';
-
-import clsx from 'clsx';
-
-import styles from './styles.module.css';
-
-const QUOTES = [
+const installs = [
   {
-    thumbnail: require('../data/quotes/christopher-chedeau.jpg'),
-    name: 'Christopher "vjeux" Chedeau',
-    title: translate({
-      id: 'homepage.quotes.christopher-chedeau.title',
-      message: 'Lead Prettier Developer',
-      description: 'Title of quote of Christopher Chedeau on the home page',
-    }),
-    text: (
-      <Translate
-        id="homepage.quotes.christopher-chedeau"
-        description="Quote of Christopher Chedeau on the home page">
-        I&apos;ve helped open source many projects at Facebook and every one
-        needed a website. They all had very similar constraints: the
-        documentation should be written in markdown and be deployed via GitHub
-        pages. I’m so glad that Docusaurus now exists so that I don’t have to
-        spend a week each time spinning up a new one.
-      </Translate>
+    label: 'Curl',
+    language: 'bash',
+    children: `# Install
+foo bar`
+  },
+  {
+    label: 'Homebrew',
+    language: 'bash',
+    children: `# Install
+foobar`
+  },
+  {
+    label: 'Docker',
+    language: 'bash',
+    children: `# Pull
+foobar`
+  },
+  {
+    label: 'Asdf',
+    language: 'bash',
+    children: `foobar`
+  },
+]
+
+const snippets = [
+  {
+    label: 'Mapping',
+    further: '/',
+    language: 'yaml',
+    children: `foobar`,
+  },
+  {
+    label: 'Multiplexing',
+    further: '/',
+    language: 'yaml',
+    children: `foobar`,
+  },
+  {
+    label: 'Windowing',
+    further: '/',
+    language: 'yaml',
+    children: `foobar`,
+  },
+  {
+    label: 'Enrichments',
+    further: '/',
+    language: 'yaml',
+    children: `foobar`,
+  },
+];
+
+const features = [
+  {
+    title: 'Title',
+    imageUrl: '',
+    description: (
+      <>
+        <p>
+          Foo
+        </p>
+        <p>
+          Bar
+        </p>
+      </>
     ),
   },
   {
-    thumbnail: require('../data/quotes/hector-ramos.jpg'),
-    name: 'Hector Ramos',
-    title: translate({
-      id: 'homepage.quotes.hector-ramos.title',
-      message: 'Lead React Native Advocate',
-      description: 'Title of quote of Hector Ramos on the home page',
-    }),
-    text: (
-      <Translate
-        id="homepage.quotes.hector-ramos"
-        description="Quote of Hector Ramos on the home page">
-        Open source contributions to the React Native docs have skyrocketed
-        after our move to Docusaurus. The docs are now hosted on a small repo in
-        plain markdown, with none of the clutter that a typical static site
-        generator would require. Thanks Slash!
-      </Translate>
-    ),
-  },
-  {
-    thumbnail: require('../data/quotes/ricky-vetter.jpg'),
-    name: 'Ricky Vetter',
-    title: translate({
-      id: 'homepage.quotes.risky-vetter.title',
-      message: 'ReasonReact Developer',
-      description: 'Title of quote of Ricky Vetter on the home page',
-    }),
-    text: (
-      <Translate
-        id="homepage.quotes.risky-vetter"
-        description="Quote of Ricky Vetter on the home page">
-        Docusaurus has been a great choice for the ReasonML family of projects.
-        It makes our documentation consistent, i18n-friendly, easy to maintain,
-        and friendly for new contributors.
-      </Translate>
+    title: 'Video',
+    imageUrl: '',
+    description: (
+      <>
+        <p>Hello</p>
+        <ReactPlayer
+          className={classnames('col col-6 padding--lg')}
+          url='https://youtu.be/Uf81zJkuYK0'
+          controls={true}
+        />
+      </>
     ),
   },
 ];
 
-function Home() {
-  const {
-    siteConfig: {
-      customFields: {description},
-      tagline,
-    },
-  } = useDocusaurusContext();
+interface FeatureArgs {
+  imageUrl?: string;
+  title?: string;
+  description: JSX.Element;
+};
+
+function Feature({imageUrl, title, description}: FeatureArgs) {
+  const imgUrl = useBaseUrl(imageUrl);
   return (
-    <Layout title={tagline} description={description as string}>
+    <div className={classnames('col col--6')}>
+      {imgUrl && (
+        <div className="text--center">
+          <img className={classnames('padding-vert--md', styles.featureImage)} src={imgUrl} alt={title} />
+        </div>
+      )}
+      <h3>{title}</h3>
+      {description}
+    </div>
+  );
+}
+
+function Home() {
+  const context = useDocusaurusContext();
+  const siteConfig = context.siteConfig;
+  return (
+    <Layout
+      title={`${siteConfig.title}`}
+      description="Fancy stream processing made operationally mundane">
+      <header className={classnames('hero', styles.heroBanner)}>
+        <div className="container">
+          <div className="row">
+            <div className={classnames('col col--5 col--offset-1')}>
+              <h1 className="hero__title">{siteConfig.title}</h1>
+              <p className="hero__subtitle">{siteConfig.tagline}</p>
+              <div className={styles.buttons}>
+                <Link
+                  className={classnames(
+                    'button button--outline button--primary button--lg',
+                    styles.getStarted,
+                  )}
+                  to={useBaseUrl('docs/')}>
+                  Get Started
+                </Link>
+              </div>
+            </div>
+            <div className={classnames('col col--5')}>
+              <img className={styles.heroImg} src="img/logo.svg" />
+            </div>
+          </div>
+        </div>
+      </header>
       <main>
-        <div className={styles.hero}>
-          <div className={styles.heroInner}>
-            <h1 className={styles.heroProjectTagline}>
-              <img
-                alt={translate({message: 'Docusaurus with Keytar'})}
-                className={styles.heroLogo}
-                src={useBaseUrl('/img/docusaurus_keytar.svg')}
-              />
-              <span
-                className={styles.heroTitleTextHtml}
-                dangerouslySetInnerHTML={{
-                  __html: translate({
-                    id: 'homepage.hero.title',
-                    message:
-                      'Build <b>optimized</b> websites <b>quickly</b>, focus on your <b>content</b>',
-                    description:
-                      'Home page hero title, can contain simple html tags',
-                  }),
-                }}
-              />
-            </h1>
-            <div className={styles.indexCtas}>
-              <Link className="button button--primary" to="/docs/introduction">
-                <Translate>Get Started</Translate>
-              </Link>
-              <Link className="button button--info" to="https://docusaurus.new">
-                <Translate>Playground</Translate>
-              </Link>
-              <span className={styles.indexCtasGitHubButtonWrapper}>
-                <iframe
-                  className={styles.indexCtasGitHubButton}
-                  src="https://ghbtns.com/github-btn.html?user=facebook&amp;repo=docusaurus&amp;type=star&amp;count=true&amp;size=large"
-                  width={160}
-                  height={30}
-                  title="GitHub Stars"
-                />
-              </span>
+        <div className="container">
+          <div className="row">
+            <div className={classnames(`${styles.pitch} col col--6`)}>
+              <h2>It's boringly easy to use</h2>
+              <p>
+                Written in Go, deployed as a static binary, declarative configuration. <a href="https://github.com/syntixi/syntixi">Open source</a> and cloud native as utter heck.
+              </p>
+              {installs && installs.length && (
+                <Tabs defaultValue={installs[0].label} values={installs.map((props, idx) => {
+                  return {label:props.label, value:props.label};
+                })}>
+                  {installs.map((props, idx) => (
+                    <TabItem key={idx} value={props.label}>
+                      <CodeBlock {...props}/>
+                    </TabItem>
+                  ))}
+                </Tabs>
+              )}
+            </div>
+            <div className={classnames('col col--6')}>
+                {snippets && snippets.length && (
+                  <section className={styles.configSnippets}>
+                    <Tabs defaultValue={snippets[0].label} values={snippets.map((props, idx) => {
+                      return {label:props.label, value:props.label};
+                    })}>
+                      {snippets.map((props, idx) => (
+                        <TabItem key={idx} value={props.label}>
+                          <div style={{position: 'relative'}}>
+                            <CodeBlock {...props}/>
+                            {props.further && <Link
+                              className={classnames(styles.furtherButton, 'button button--outline button--primary')}
+                              to={props.further}>
+                              Read about
+                            </Link>}
+                          </div>
+                        </TabItem>
+                      ))}
+                    </Tabs>
+                  </section>
+                )}
             </div>
           </div>
         </div>
-        <div className={styles.section}>
-          <div className="container text--center margin-bottom--xl">
-            <div className="row">
-              <div className="col">
-                <img
-                  className={styles.featureImage}
-                  alt="Powered by MDX"
-                  src={useBaseUrl('/img/undraw_typewriter.svg')}
-                />
-                <h2 className={clsx(styles.featureHeading)}>
-                  <Translate>Powered by Markdown</Translate>
-                </h2>
-                <p className="padding-horiz--md">
-                  <Translate>
-                    Save time and focus on your project's documentation. Simply
-                    write docs and blog posts with Markdown/MDX and Docusaurus
-                    will publish a set of static HTML files ready to serve. You
-                    can even embed JSX components into your Markdown thanks to
-                    MDX.
-                  </Translate>
-                </p>
-              </div>
-              <div className="col">
-                <img
-                  alt="Built Using React"
-                  className={styles.featureImage}
-                  src={useBaseUrl('/img/undraw_react.svg')}
-                />
-                <h2 className={clsx(styles.featureHeading)}>
-                  <Translate>Built Using React</Translate>
-                </h2>
-                <p className="padding-horiz--md">
-                  <Translate>
-                    Extend or customize your project's layout by reusing React.
-                    Docusaurus can be extended while reusing the same header and
-                    footer.
-                  </Translate>
-                </p>
-              </div>
-              <div className="col">
-                <img
-                  alt="Ready for Translations"
-                  className={styles.featureImage}
-                  src={useBaseUrl('/img/undraw_around_the_world.svg')}
-                />
-                <h2 className={clsx(styles.featureHeading)}>
-                  <Translate>Ready for Translations</Translate>
-                </h2>
-                <p className="padding-horiz--md">
-                  <Translate>
-                    Localization comes pre-configured. Use Crowdin to translate
-                    your docs into over 70 languages.
-                  </Translate>
-                </p>
+        {features && features.length && (
+          <section className={styles.features}>
+            <div className="container margin-vert--md">
+              <div className="row">
+                {features.map((props, idx) => (
+                  <Feature key={idx} {...props} />
+                ))}
               </div>
             </div>
-          </div>
-          <div className="container text--center">
-            <div className="row">
-              <div className="col col--4 col--offset-2">
-                <img
-                  alt="Document Versioning"
-                  className={styles.featureImage}
-                  src={useBaseUrl('/img/undraw_version_control.svg')}
-                />
-                <h2 className={clsx(styles.featureHeading)}>
-                  <Translate>Document Versioning</Translate>
-                </h2>
-                <p className="padding-horiz--md">
-                  <Translate>
-                    Support users on all versions of your project. Document
-                    versioning helps you keep documentation in sync with project
-                    releases.
-                  </Translate>
-                </p>
-              </div>
-              <div className="col col--4">
-                <img
-                  alt="Document Search"
-                  className={styles.featureImage}
-                  src={useBaseUrl('/img/undraw_algolia.svg')}
-                />
-                <h2 className={clsx(styles.featureHeading)}>
-                  <Translate>Content Search</Translate>
-                </h2>
-                <p className="padding-horiz--md">
-                  <Translate>
-                    Make it easy for your community to find what they need in
-                    your documentation. We proudly support Algolia documentation
-                    search.
-                  </Translate>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={clsx(styles.section, styles.sectionAlt)}>
-          <div className="container">
-            <div className="row">
-              {QUOTES.map((quote) => (
-                <div className="col" key={quote.name}>
-                  <div className="avatar avatar--vertical margin-bottom--sm">
-                    <Image
-                      alt={quote.name}
-                      className="avatar__photo avatar__photo--xl"
-                      img={quote.thumbnail}
-                      style={{overflow: 'hidden'}}
-                    />
-                    <div className="avatar__intro padding-top--sm">
-                      <div className="avatar__name">{quote.name}</div>
-                      <small className="avatar__subtitle">{quote.title}</small>
-                    </div>
-                  </div>
-                  <p className="text--center text--italic padding-horiz--md">
-                    {quote.text}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+          </section>
+        )}
       </main>
     </Layout>
   );

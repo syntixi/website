@@ -1,8 +1,18 @@
 ---
-title: HTTP Trigger
 sidebar_label: 'HTTP'
 sidebar_position: 1
 ---
+
+# HTTP trigger
+
+import Highlight from '@site/src/components/Highlight';
+
+<div class="pill-list">
+    <Highlight color="rgb(31 167 138)">Community</Highlight>
+    <Highlight color="rgb(238 67 110)">Enterprise</Highlight>
+</div>
+
+## Introduction
 
 HTTP trigger exposes an internal function to public.
 
@@ -75,7 +85,7 @@ $ curl -H 'Host: example.com' http://${INGRESS_SERVICE_LOAD_BALANCER_IP}/
 
 :::note
 
-You will need a TLS config before continue. Visit [here](../core/config.md#file) to learn how to create it.
+You will need a TLS config before continue. Visit [here](../config.md#file) to learn how to create it.
 
 :::
 

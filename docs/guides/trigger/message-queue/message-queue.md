@@ -2,7 +2,20 @@
 title: Message Queue Trigger
 sidebar_label: 'Trigger'
 sidebar_position: 1
+draft: true
+unlisted: true
 ---
+
+# Message Queue Trigger
+
+import Highlight from '@site/src/components/Highlight';
+
+<div class="pill-list">
+    <Highlight color="rgb(31 167 138)">Community</Highlight>
+    <Highlight color="rgb(238 67 110)">Enterprise</Highlight>
+</div>
+
+## Introduction
 
 Message Queue Trigger invokes a function when receiving message from subscribed topic.
 
