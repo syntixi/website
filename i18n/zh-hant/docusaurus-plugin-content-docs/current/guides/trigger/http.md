@@ -81,7 +81,7 @@ $ curl -H 'Host: example.com' http://${INGRESS_SERVICE_LOAD_BALANCER_IP}/
 
 :::note
 
-在繼續之前，您需要一個 TLS Config，請到 [Config](../core/config.md#file) 來瞭解如何建立。
+在繼續之前，您需要一個 TLS Config，請到 [Config](../config.md#file) 來瞭解如何建立。
 
 :::
 
