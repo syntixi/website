@@ -14,7 +14,7 @@
   NODE_VERSION = "16"
 
 [context.production]
-  command = "netlify:build"
+  command = "yarn build"
 
 [context.deploy-preview]
-  command = "netlify:build"
+  command = "yarn build"

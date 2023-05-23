@@ -11,8 +11,7 @@
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "serve": "docusaurus serve",
-    "docver": "yarn docusaurus docs:version",
-    "netlify:build": "yarn build"
+    "docver": "yarn docusaurus docs:version"
   },
   "dependencies": {
     "@algolia/client-search": "^4.12.1",
