@@ -1,8 +1,18 @@
 ---
-title: Cron Trigger
 sidebar_label: 'Cron'
 sidebar_position: 3
 ---
+
+# Cron trigger
+
+import Highlight from '@site/src/components/Highlight';
+
+<div class="pill-list">
+    <Highlight color="rgb(31 167 138)">Community</Highlight>
+    <Highlight color="rgb(238 67 110)">Enterprise</Highlight>
+</div>
+
+## Introduction
 
 Cron trigger invokes a function periodically based on provided crontab specification.
 
