@@ -13,6 +13,9 @@ sidebar_position: 1
 * [Kubectl (>= 1.20)](https://kubernetes.io/docs/tasks/tools/): The version of Kubectl(Kubernetes CLI) should match Kubernetes version you test against with.
 * [Helm (>= 3.0)](https://helm.sh/) 
 
+## Optional
+* [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus): A monitoring tool for Kubernetes cluster. Syntixi function monitoring mechanism is based on it.
+
 ## Add Syntixi Helm repository
 
 1. Add chart repository: `helm repo add syntixi https://releases.syntixi.dev/`

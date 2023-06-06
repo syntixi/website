@@ -6,10 +6,6 @@ sidebar_position: 1
 # Function
 Function 是一個應用程式容器，其執行指定的 binary 檔案或原始碼。
 
-目前 Syntixi 僅支援 http 服務運行在80 port。未來將會支援：
-* 不同的協定，如 TCP, UDP
-* 從其他 port 連接到應用程式
-
 ## 如何建立 Function
 
 Syntixi 讓使用者可以用 [容器映像檔](https://www.docker.com/resources/what-container) 
@@ -18,10 +14,10 @@ FaaS 方式，我們也支援使用原始碼建立 Function。
 
 ### 容器映象檔
 
-這裡我們使用 [NGINX](https://hub.docker.com/_/nginx) 容器映像檔來當例子建立 Function
+這裡我們使用 [NGINX](https://hub.docker.com/_/nginx) 容器映像檔來當例子建立 Function，並透過 `--port` 來指定揭露的 port
 
 ```sh
-$ syntixi function create --name fn-demo --image nginx
+$ syntixi function create --name fn-demo --image nginx --port=tcp=80=http
 ```
 
 Kubernetes 下載容器映像檔時會花一些時間，當完成時您可以使用 `test` 來測試您建立的 Function
@@ -66,6 +62,17 @@ node hello.js
 node /userfunc/hello.js
 ```
 
+### 揭露 Function port
+你可以在建立 Function 透過 `--port` 參數來指定要揭露的 Function port
+
+以下是 `--port` 參數的使用方式
+```bash
+--port=<protocol>=<port_number>=<port_name>
+--port=tcp=80=http --port=tcp=443=https --port=udp=53=dns
+```
+
+
+
 ## 要使用容器映像檔還是 Bundle?
 
 以下是一些建議，可以幫助您決定哪種更適合您的情況。
@@ -88,3 +95,35 @@ node /userfunc/hello.js
 
 在這種情況下，您可以使用帶有 HTTP 服務的容器映像檔，並參考包含機器學習模型的 Bundle 來建立 Function。一旦 Bundle 中的機器學習模型更新，Syntixi 將自動滾動更新相關的 Function。
 
+
+## Function 監控
+
+如果你想使用 Syntixi function 監控機制的話，需要事先安裝 [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus)。
+Syntixi 透過 [Grafana](https://grafana.com/) 和 [Prometheus](https://prometheus.io/) 提供基礎的 function 監控，
+當你建立 Function 時，Syntixi 會透過 [grafana-operator](https://github.com/grafana-operator/grafana-operator)自動生成 Grafana dashboard，
+
+我們目前提供的 Function 監控項目如下：
+
+```
+* Available pod percent
+* CPU usage
+* CPU throttling
+* memory usage
+```
+
+### 客製化 Panel
+
+如果上述監控項目無法滿足您的需求，您可以透過 `--panel` 參數來增加客製化的 [Grafana panel](https://grafana.com/docs/grafana/latest/panels-visualizations/)。
+
+客製化 Panel 的 json 可以使用以下變數，將自動替換成 Function 的相關資料：
+```
+{{.FunctionNamespace}}
+{{.FunctionName}}
+```
+
+這邊是一個新增客製化 Panel 的範例：
+```sh
+# --panel syntax: --panel=<name>=<panel-json>
+$ syntixi fn create --image=nginx --name=nginx --panel=my_panel='{"datasource":"$datasource","description":"","fieldConfig":{"defaults":{"mappings":[],"thresholds":{"mode":"percentage","steps":[{"color":"dark-red","value":null},{"color":"orange","value":50},{"color":"green","value":100}]},"color":{"mode":"thresholds"},"max":1,"min":0,"unit":"percentunit"},"overrides":[]},"gridPos":{"h":8,"w":4,"x":6,"y":1},"id":30,"options":{"reduceOptions":{"values":false,"calcs":["lastNotNull"],"fields":""},"orientation":"auto","showThresholdLabels":false,"showThresholdMarkers":true},"pluginVersion":"9.5.1","targets":[{"datasource":"$datasource","editorMode":"builder","exemplar":false,"expr":"kube_deployment_status_replicas_available{namespace=\"default\",deployment=\"nginx\"}/kube_deployment_spec_replicas{namespace=\"{{.FunctionNamespace}}\",deployment=\"{{.FunctionName}}\","format":"time_series","instant":false,"legendFormat":"__auto","range":true,"refId":"A"}],"title":"DEMO","type":"gauge"}'
+```
+在 Function 建立完成之後，Syntixi 會將新增的 panel 放在原本的 panel 下方。

@@ -16,11 +16,6 @@ import Highlight from '@site/src/components/Highlight';
 
 Function is an application container that executes provided binary or source code.
 
-As of now, Syntixi only supports running HTTP service that exports at 80 ports. In the future, we plan to support:
-
-* Different protocol like TCP and UDP.
-* Application exposes in different ports.
-
 ## How to create a function
 
 Syntixi allows users to create a function with [container image](https://www.docker.com/resources/what-container) without
@@ -29,10 +24,10 @@ traditional FaaS way to create a function, we also support to create a function 
 
 ### With container image
 
-Here we use [NGINX](https://hub.docker.com/_/nginx) container image to create an example function.
+Here we use [NGINX](https://hub.docker.com/_/nginx) container image to create an example function and specify container port with `--port` argument.
 
 ```sh
-$ syntixi function create --name fn-demo --image nginx
+$ syntixi function create --name fn-demo --image nginx --port=tcp=80=http
 ```
 
 It may take some time for Kubernetes to pull container imager. Once it's done, you can test your function with
@@ -81,6 +76,16 @@ or in absolute path format
 node /userfunc/hello.js
 ```
 
+### Expose function ports
+You can expose your function ports with `--port` argument when create function.
+
+The following port shows how to use `--port` argument.
+```bash
+--port=<protocol>=<port_number>=<port_name>
+--port=tcp=80=http --port=tcp=443=https --port=udp=53=dns
+```
+
+
 ## Use container image or bundle ?
 
 Here are some guidelines that can help you to decide which is better fit in your case.
@@ -108,3 +113,36 @@ and ML model.
 
 In this case, you can create a function with HTTP service image and referenced the bundle contains ML model. Once the
 bundle is updated with the latest model, Syntixi will perform rolling update for function automatically.
+
+## Function monitoring
+
+
+
+Syntixi provides basic function monitoring through [Grafana](https://grafana.com/) and [Prometheus](https://prometheus.io/). When you create a function, 
+Syntixi will automatically create a Grafana dashboard using [grafana-operator](https://github.com/grafana-operator/grafana-operator). To utilize Syntixi's monitoring mechanism, 
+you will need to install kube-prometheus beforehand.
+
+Below are the monitoring items available for functions:
+```
+* Available pod percent
+* CPU usage
+* CPU throttling
+* memory usage
+```
+
+### Customized panel
+
+If you are unsatisfied with above monitoring items, you can add customized [Grafana panel](https://grafana.com/docs/grafana/latest/panels-visualizations/) with `--panel` argument.
+
+You can use the following variables in the customized JSON of a panel, and they will be automatically replaced with the relevant data of the function:
+```
+{{.FunctionNamespace}}
+{{.FunctionName}}
+```
+
+Here is an example to create customized panel:
+```sh
+# --panel syntax: --panel=<name>=<panel-json>
+$ syntixi fn create --image=nginx --name=nginx --panel=my_panel='{"datasource":"$datasource","description":"","fieldConfig":{"defaults":{"mappings":[],"thresholds":{"mode":"percentage","steps":[{"color":"dark-red","value":null},{"color":"orange","value":50},{"color":"green","value":100}]},"color":{"mode":"thresholds"},"max":1,"min":0,"unit":"percentunit"},"overrides":[]},"gridPos":{"h":8,"w":4,"x":6,"y":1},"id":30,"options":{"reduceOptions":{"values":false,"calcs":["lastNotNull"],"fields":""},"orientation":"auto","showThresholdLabels":false,"showThresholdMarkers":true},"pluginVersion":"9.5.1","targets":[{"datasource":"$datasource","editorMode":"builder","exemplar":false,"expr":"kube_deployment_status_replicas_available{namespace=\"default\",deployment=\"nginx\"}/kube_deployment_spec_replicas{namespace=\"default\",deployment=\"nginx\"}","format":"time_series","instant":false,"legendFormat":"__auto","range":true,"refId":"A"}],"title":"HAHA","type":"gauge"}'
+```
+After function create, Syntixi will add the panel below origin panels.

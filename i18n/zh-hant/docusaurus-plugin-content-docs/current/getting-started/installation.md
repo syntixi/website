@@ -13,6 +13,10 @@ sidebar_position: 1
 * [Kubectl (>= 1.20)](https://kubernetes.io/docs/tasks/tools/): Kubectl（Kubernetes CLI）的版本應與您進行測試的 Kubernetes 版本相匹配
 * [Helm (>= 3.0)](https://helm.sh/) 
 
+## 可選安裝項目
+* [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus): 一個用於監控 Kubernetes 叢集的工具，Syntixi Function 監控以該工具為基礎
+
+
 ## 新增 Syntixi Helm 儲存庫
 
 1. 新增 Helm chart 儲存庫: `helm repo add syntixi https://releases.syntixi.dev/`
@@ -96,7 +100,9 @@ $ syntixi bundle create --name hello-bundle --code hello.js
 $ syntixi function create --name hello \
     --image node:16-alpine3.11 \
     --bundle hello-bundle \
-    --entry "node hello.js" 
+    --entry "node hello.js" \
+    --port=tcp=80=http
+    
 
 # Your function is about to start running within a pod.
 $ kubectl get pod -l functionName=hello
