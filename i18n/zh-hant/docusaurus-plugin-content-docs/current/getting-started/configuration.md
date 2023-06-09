@@ -219,3 +219,22 @@ prometheus:
   enabled: false
   endpoint: ""
 ```
+
+## Grafana-operator
+Parameter | Description
+--------- | ----------- 
+`grafana_operator.installed` | Set to `true` if grafana-operator needs to be deployed along with syntixi
+`grafana_operator.enabled` | Set to `true` if you want to using Syntixi monitoring mechanism.
+`grafana_operator.grafana.url` | Url to call grafana.  Use to create grafana-operator grafana resource. Default value is kube-prometheus's default grafana url.
+`grafana_operator.grafana.user` | Grafana login user. Use to create grafana-operator grafana resource. Default value is kube-prometheus's default grafana user.
+`grafana_operator.grafana.password` | Grafana login user corresponding password. Use to create grafana-operator grafana resource. Default value is kube-prometheus's default grafana pasword.
+
+```yaml
+grafana_operator:
+  install: true
+  enabled: true
+  grafana:
+    url : "http://grafana.monitoring.svc.cluster.local:3000" # kube-prometheus grafana default FQDN
+    user: "admin"
+    password: "admin"
+```

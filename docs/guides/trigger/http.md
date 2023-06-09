@@ -25,13 +25,17 @@ Otherwise, ingress controller will forward all requests to it.
 
 :::
 
+### Path
+
+Use the following format `--path=<path>=<path-type>=<fn-name>=<port-name>` to describe a path and associate it with a function. Syntixi will expose the path `<path>=<path-type>` to the corresponding function port `<fn-name>=<port-name>`. It is essential to [expose the function port](../function.md#Expose-function-ports) before creating an HTTP trigger.
+
 ### Path Matching
 
 Following command exposes your function at path `/` and accepts requests from all host.
 
 ```sh
 # Demo only, do NOT do this in production cluster.
-$ syntixi httptrigger create --name hello --function hello --path "/"
+$ syntixi httptrigger create --name hello --path="/"=Prefix=hello=http
 ```
 
 ```
@@ -43,15 +47,13 @@ $ curl http://${INGRESS_SERVICE_LOAD_BALANCER_IP}/
 
 Each path is required to have a corresponding path type for path matching.
 
-Use format `--path <path>=<path-type>` to specify path type, and `Exact` is used automatically if no path type is provided.  
-
 ```sh
-$ syntixi httptrigger create --name hello --function hello --path "/foo/bar=Exact"
+$ syntixi httptrigger create --name hello --path="/foo/bar"=Exact=hello=http
 ```
 
 There are threee supported path types:
 
-* `Exact`: **(default)** Matches the URL path exactly and with case sensitivity.
+* `Exact`: Matches the URL path exactly and with case sensitivity.
 
 * `Prefix`: Matches based on a URL path prefix split by /. Matching is case sensitive and done on a path element by element basis. A path element refers to the list of labels in the path split by the / separator. A request is a match for path p if every p is an element-wise prefix of p of the request path.
 
@@ -77,7 +79,7 @@ We strongly recommend to specify a target host (domain name) when exposing a fun
 Use `--host` to specify the target host of HTTP trigger.
 
 ```sh
-$ syntixi ht create --name hello --path "/" --function hello --host example.com
+$ syntixi ht create --name hello --path="/"=Exact=hello=http --host example.com
 $ curl -H 'Host: example.com' http://${INGRESS_SERVICE_LOAD_BALANCER_IP}/
 ```
 
@@ -92,7 +94,7 @@ You will need a TLS config before continue. Visit [here](../config.md#file) to l
 Use `--tls` to specify which TLS config to use and assume you already created a TLS config named **tls-cfg**.
 
 ```sh
-$ syntixi ht create --name hello --path "/" --function hello --host example.com --tls tls-cfg
+$ syntixi ht create --name hello --path="/"=Exact=hello=http  --host example.com --tls tls-cfg
 $ curl --insecure -H 'Host: example.com' http://${INGRESS_SERVICE_LOAD_BALANCER_IP}/
 ```
 

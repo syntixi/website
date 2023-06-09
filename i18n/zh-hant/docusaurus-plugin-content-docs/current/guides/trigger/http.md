@@ -17,6 +17,12 @@ HTTP Trigger 揭露內部的 Function 讓其可以被外部存取
 
 :::
 
+### 路徑
+
+使用 ` --path=<path>=<path-type>=<fn-name>=<port-name>` 來描述 HTTP 路徑以及對應的 Function port.
+Syntixi 會揭露路徑 `<path>=<path-type>` 到對應的 Function port `<fn-name>=<port-name>`.
+在建立 HTTP Trigger 之前你需要先揭露 [Function port](../function.md#Expose-function-ports)。
+
 ### 路徑匹配
 
 以下指令將您的 Function 揭露在路徑 `/` 並接受來自所有目的主機的請求。
@@ -24,7 +30,7 @@ HTTP Trigger 揭露內部的 Function 讓其可以被外部存取
 
 ```sh
 # Demo only, do NOT do this in production cluster.
-$ syntixi httptrigger create --name hello --function hello --path "/"
+$ syntixi httptrigger create --name hello --path="/"=Prefix=hello=http
 ```
 
 ```
@@ -37,15 +43,13 @@ $ curl http://${INGRESS_SERVICE_LOAD_BALANCER_IP}/
 每個路徑都需要有對應的路徑類型來做匹配。
 
 
-使用 `--path <path>=<path-type>` 來指定路徑種類，如果沒有指定該參數時，預設使用 `Exact` 來當做路徑類型。
-
 ```sh
-$ syntixi httptrigger create --name hello --function hello --path "/foo/bar=Exact"
+$ syntixi httptrigger create --name hello --path="/foo/bar"=Exact=hello=http
 ```
 
 以下為三種支援的路徑類型：
 
-* `Exact`: **(default)** 精確的匹配並且會區分大小寫
+* `Exact`: 精確的匹配並且會區分大小寫
 
 * `Prefix`: 根據 URL 路徑前綴(以 / 分隔)進行匹配，匹配會區分大小寫並且對路徑中的元素逐個比對完成。路徑元素指的是由 `/` 分隔出的路徑標籤列表。一個請求匹配路徑 P 的條件為：路徑 P 的路徑元素為請求路徑元素的前綴
 
@@ -73,7 +77,7 @@ Mixed         | /foo (Prefix), /foo (Exact)	| /foo | Yes, prefers Exact
 
 
 ```sh
-$ syntixi ht create --name hello --path "/" --function hello --host example.com
+$ syntixi ht create --name hello --path="/"=Exact=hello=http --host example.com
 $ curl -H 'Host: example.com' http://${INGRESS_SERVICE_LOAD_BALANCER_IP}/
 ```
 
@@ -89,7 +93,7 @@ $ curl -H 'Host: example.com' http://${INGRESS_SERVICE_LOAD_BALANCER_IP}/
 
 
 ```sh
-$ syntixi ht create --name hello --path "/" --function hello --host example.com --tls tls-cfg
+$ syntixi ht create --name hello --path="/"=Exact=hello=http  --host example.com --tls tls-cfg
 $ curl --insecure -H 'Host: example.com' http://${INGRESS_SERVICE_LOAD_BALANCER_IP}/
 ```
 
