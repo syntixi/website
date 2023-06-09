@@ -27,9 +27,7 @@ Otherwise, ingress controller will forward all requests to it.
 
 ### Path
 
-Use format ` --path=<path>=<path-type>=<fn-name>=<port-name>` to describe path and associate function. 
-Syntixi will expose path `<path>=<path-type>` to corresponding  function port `<fn-name>=<port-name>`.
-You need to expose function port [here](../function.md#Expose-function-ports) before create httptrigger.
+Use the following format `--path=<path>=<path-type>=<fn-name>=<port-name>` to describe a path and associate it with a function. Syntixi will expose the path `<path>=<path-type>` to the corresponding function port `<fn-name>=<port-name>`. It is essential to [expose the function port](../function.md#Expose-function-ports) before creating an HTTP trigger.
 
 ### Path Matching
 

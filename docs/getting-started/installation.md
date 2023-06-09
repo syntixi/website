@@ -14,7 +14,7 @@ sidebar_position: 1
 * [Helm (>= 3.0)](https://helm.sh/) 
 
 ## Optional
-* [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus): A monitoring tool for Kubernetes cluster. Syntixi function monitoring mechanism is based on it.
+* [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus): A monitoring tool for Kubernetes cluster.
 
 ## Add Syntixi Helm repository
 

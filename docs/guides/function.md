@@ -24,7 +24,7 @@ traditional FaaS way to create a function, we also support to create a function 
 
 ### With container image
 
-Here we use [NGINX](https://hub.docker.com/_/nginx) container image to create an example function and specify container port with `--port` argument.
+Here we use [NGINX](https://hub.docker.com/_/nginx) container image to create an example function and specify a container port with `--port` argument.
 
 ```sh
 $ syntixi function create --name fn-demo --image nginx --port=tcp=80=http
@@ -77,9 +77,9 @@ node /userfunc/hello.js
 ```
 
 ### Expose function ports
-You can expose your function ports with `--port` argument when create function.
+You can expose function ports with `--port` arguments when creating function.
 
-The following port shows how to use `--port` argument.
+The following example shows how to use `--port` arguments to expose multiple ports.
 ```bash
 --port=<protocol>=<port_number>=<port_name>
 --port=tcp=80=http --port=tcp=443=https --port=udp=53=dns
@@ -116,33 +116,42 @@ bundle is updated with the latest model, Syntixi will perform rolling update for
 
 ## Function monitoring
 
-
-
-Syntixi provides basic function monitoring through [Grafana](https://grafana.com/) and [Prometheus](https://prometheus.io/). When you create a function, 
-Syntixi will automatically create a Grafana dashboard using [grafana-operator](https://github.com/grafana-operator/grafana-operator). To utilize Syntixi's monitoring mechanism, 
+Syntixi provides basic function monitoring through [Grafana](https://grafana.com/) and [Prometheus](https://prometheus.io/). When you create a function, Syntixi will automatically create a Grafana dashboard using [grafana-operator](https://github.com/grafana-operator/grafana-operator). To utilize Syntixi's monitoring mechanism, 
 you will need to install kube-prometheus beforehand.
 
-Below are the monitoring items available for functions:
+Syntixi offers basic function monitoring via [Grafana](https://grafana.com/) and [Prometheus](https://prometheus.io/). Upon creating a function, it automatically generates a Grafana dashboard using the grafana-operator. To fully leverage Syntixi's monitoring mechanisms, it is necessary to have kube-prometheus installed in advance.
+
+Below are metrics available for basic function monitoring :
+
 ```
 * Available pod percent
 * CPU usage
 * CPU throttling
-* memory usage
+* Memory usage
 ```
+
+![Function Grafana Dashboard](/img/function/monitoring/function-grafana-panel.png)
 
 ### Customized panel
 
+<div class="pill-list">
+    <Highlight color="rgb(238 67 110)">Enterprise</Highlight>
+</div>
+
 If you are unsatisfied with above monitoring items, you can add customized [Grafana panel](https://grafana.com/docs/grafana/latest/panels-visualizations/) with `--panel` argument.
 
-You can use the following variables in the customized JSON of a panel, and they will be automatically replaced with the relevant data of the function:
+Following variables in the customized panel JSON will be automatically replaced with the relevant data of the function:
+
 ```
 {{.FunctionNamespace}}
 {{.FunctionName}}
 ```
 
 Here is an example to create customized panel:
+
 ```sh
 # --panel syntax: --panel=<name>=<panel-json>
 $ syntixi fn create --image=nginx --name=nginx --panel=my_panel='{"datasource":"$datasource","description":"","fieldConfig":{"defaults":{"mappings":[],"thresholds":{"mode":"percentage","steps":[{"color":"dark-red","value":null},{"color":"orange","value":50},{"color":"green","value":100}]},"color":{"mode":"thresholds"},"max":1,"min":0,"unit":"percentunit"},"overrides":[]},"gridPos":{"h":8,"w":4,"x":6,"y":1},"id":30,"options":{"reduceOptions":{"values":false,"calcs":["lastNotNull"],"fields":""},"orientation":"auto","showThresholdLabels":false,"showThresholdMarkers":true},"pluginVersion":"9.5.1","targets":[{"datasource":"$datasource","editorMode":"builder","exemplar":false,"expr":"kube_deployment_status_replicas_available{namespace=\"default\",deployment=\"nginx\"}/kube_deployment_spec_replicas{namespace=\"default\",deployment=\"nginx\"}","format":"time_series","instant":false,"legendFormat":"__auto","range":true,"refId":"A"}],"title":"HAHA","type":"gauge"}'
 ```
-After function create, Syntixi will add the panel below origin panels.
+
+After function creation, customized panel will be added to dashboard below the origin panels.
