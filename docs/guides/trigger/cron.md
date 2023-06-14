@@ -18,7 +18,7 @@ Cron trigger invokes a function periodically based on provided crontab specifica
 
 ## How to create a cron trigger
 
-Assume we want to trigger a function every minutes, you can provide `* * * * *` as crontab specification when create the cron trigger. (Visit [here](https://en.wikipedia.org/wiki/Cron) here to learn more about crontab specification.)
+Assume we want to trigger a function every minutes, you can provide `* * * * *` as cron expression when creating the cron trigger. (Visit [here](https://en.wikipedia.org/wiki/Cron) to learn more about cron expression.)
 
 ```sh
 $ syntixi crontrigger create --name hello --function hello --cron "* * * * *"
